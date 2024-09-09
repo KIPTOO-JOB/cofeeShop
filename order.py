@@ -35,7 +35,7 @@ class Order:
 
     @coffee.setter
     def coffee(self, value):
-        from coffee import Coffee  # Import here to avoid circular import
+        from coffee import Coffee 
         if isinstance(value, Coffee):
             self._coffee = value
         else:

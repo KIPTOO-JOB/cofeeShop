@@ -15,11 +15,10 @@ class Coffee:
             raise ValueError("Name must be a string with at least 3 characters.")
 
     def orders(self):
-        """Returns a list of all orders for that coffee"""
+
         return self._orders
 
     def customers(self):
-        """Returns a unique list of all customers who have ordered a particular coffee"""
         unique_customers = []
         for order in self._orders:
             if order.customer not in unique_customers:
@@ -27,11 +26,9 @@ class Coffee:
         return unique_customers
 
     def num_orders(self):
-        """Returns the total number of times a coffee has been ordered"""
         return len(self._orders)
 
     def average_price(self):
-        """Returns the average price for a coffee based on its orders"""
         if len(self._orders) == 0:
             return 0
 

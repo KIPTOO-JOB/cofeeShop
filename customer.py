@@ -19,11 +19,10 @@ class Customer:
 
 
     def orders(self):
-        """Returns a list of all orders for this customer"""
         return self._orders
 
     def coffees(self):
-        """Returns a unique list of all coffees a customer has ordered"""
+    
         unique_coffees = []
         for order in self._orders:
             if order.coffee not in unique_coffees:
@@ -31,8 +30,8 @@ class Customer:
         return unique_coffees
 
     def new_order(self, coffee, price):
-        """Creates a new Order instance and associates it with this customer and the provided coffee"""
-        from order import Order  # Import here to avoid circular import
+    
+        from order import Order  
         order = Order(self, coffee, price)
         self._orders.append(order)
         coffee._orders.append(order)
@@ -40,7 +39,7 @@ class Customer:
 
     @classmethod
     def most_aficionado(cls, coffee):
-        """Returns the customer that has spent the most money on a given coffee instance"""
+
         spending_by_customer = {}
 
         for customer in cls.all_customers:
