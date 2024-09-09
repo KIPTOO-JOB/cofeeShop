@@ -1,21 +1,19 @@
+from customer import Customer
+from coffee import Coffee
 class Order:
     def __init__(self, customer, coffee, price):
-        from customer import Customer  # Import here to avoid circular import
-        from coffee import Coffee  # Import here to avoid circular import
-        self.customer = customer
-        self.coffee = coffee
-        self.price = price
-        
+        self.customer = customer  
+        self.coffee = coffee      
+        self.price = price       
+
     @property
     def price(self):
         return self._price
-    
+
     @price.setter
     def price(self, value):
-        if isinstance(value, float) and 0.0 <= value <= 10.0:
-            self._price = value
-        else:
-            raise ValueError("Price must be a float between 0.0 and 10.0.")
+        self._price = value
+        self._validate_price()
 
     @property
     def customer(self):
@@ -23,11 +21,9 @@ class Order:
 
     @customer.setter
     def customer(self, value):
-        from customer import Customer  # Import here to avoid circular import
-        if isinstance(value, Customer):
-            self._customer = value
-        else:
-            raise ValueError("Customer must be an instance of Customer.")
+        if not isinstance(value, Customer):
+            raise ValueError("Customer must be an instance of Customer class.")
+        self._customer = value
 
     @property
     def coffee(self):
@@ -35,11 +31,21 @@ class Order:
 
     @coffee.setter
     def coffee(self, value):
-        from coffee import Coffee 
-        if isinstance(value, Coffee):
-            self._coffee = value
-        else:
-            raise ValueError("Coffee must be an instance of Coffee.")
+        if not isinstance(value, Coffee):
+            raise ValueError("Coffee must be an instance of Coffee class.")
+        self._coffee = value
+
+    def _validate_price(self):
+        if not isinstance(self._price, (int, float)) or not (1.0 <= self._price <= 10.0):
+            raise ValueError("Price must be a number between 1.0 and 10.0.")
+
+    def __str__(self):
+        return (f"Order(customer={self.customer.name}, coffee={self.coffee.name}, "
+                f"price={self.price:.2f})")
     
-    def __repr__(self):
-        return f"Order(customer={self.customer.name}, coffee={self.coffee.name}, price={self.price})"
+# Example usage
+if __name__ == "__main__":
+    customer = Customer("JOB")
+    coffee = Coffee("Latte")
+    order = Order(customer, coffee, 4.5)
+    print(order)
